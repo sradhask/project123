@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <div class="hello">
+            {% for i in data %}
+            <p> img</p>{{i.img}}
+            <p>name</p>{{i.name}}
+            <p>price</p>{{i.price}}
+            <p> offerprice</p>{{i.offerprice}}
+            <p>stock</p>{{i.stock}}
+            <p> discription</p>{{i.discription}}
+            <p> sizes</p>{{i.sizes}}
+        <a href="{% url 'delete_g' i.pk %}" class="col"> <button class="btn btn-danger my-50 my-2">delete</button></a> 
+        <a href="{% url 'edit_g' i.pk %}" class="col"> <button class="btn btn-primary my-50 my-2">edit</button></a>
+       
+         {% endfor %}
+        </div>
+     
+    
+   
+</body>
+</html>

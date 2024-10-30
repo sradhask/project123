@@ -1,0 +1,43 @@
+.hello{
+    color:blue;
+    text-align: center;
+    
+
+}
+ ul{
+   list-style-type: none;
+   margin:0;
+   padding: 0;
+   overflow: hidden;
+   background-color: aquamarine;
+
+ }
+ li{
+    float:left;
+    list-style-type: none;
+    
+    
+}
+li a{
+    display:block;
+    color:black;
+    padding: 40px  ;
+    text-decoration: none;
+    
+}
+.index{
+  margin-left:20%;
+  margin-top: -5.5%;
+}
+.a1{
+    background-color: aquamarine;
+}
+
+/* .container{
+  display:grid;
+  grid-template-columns: auto auto auto;
+} */
+.hello{
+  height:100px;
+  width:100px;
+}
