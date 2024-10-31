@@ -93,7 +93,8 @@ def edit_g(request,pk):
           return render(request,'editpro.html',{'data':data})
       
 def user_login1(request):
-
+    if 'username' in request.session:
+        return redirect(seller)
     if request.method=="POST":
      email=request.POST['email']
      password=request.POST['password']
@@ -101,9 +102,23 @@ def user_login1(request):
      if user is not None:
           request.session['username']=email
           login(request,user)
-          return redirect('seller')
+          return redirect('seller1')
     else:
-          return render(request,'seller2.html')
+          return render(request,'seller1.html')
+      
+def user_login1(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')  
+        else:
+            return render(request, 'seller.html', {'error': 'Invalid credentials'})
+    else:
+        return render(request, 'seller.html')
+
     
     
 
@@ -120,7 +135,8 @@ def add_product(request):
         return redirect("seller1.html")
       
       
-            
+def seller1(request):
+    return render(request,"seller1.html")
  
 
 
