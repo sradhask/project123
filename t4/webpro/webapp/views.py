@@ -6,7 +6,7 @@ from . models  import*
 
 # Create your views here.
 
-
+# for userlogin
 def user_login(request):
     if 'username' in request.session:
         return redirect(userhome)
@@ -22,13 +22,13 @@ def user_login(request):
     else:
      return render(request,'login.html')
     
-
+# for user logout
 def logout_view(request):
         logout(request)
         if 'username' in request.session:
             request.session.flush()
         return redirect('login')
-
+# for user registration
 def register(request):
     if request.method == 'POST':
         fullname = request.POST['fullname']
@@ -61,17 +61,17 @@ def view_product(request,pk):
         data=Product.objects.filter(pk=pk)
         return render(request,"product.html",{'data':data})
        
-
+# for seller registration
 def seller(request):
   
      if request.method =='POST':
             email=request.POST['email']
             password=request.POST['password']
-            confirm_password = request.POST['ConfirmPassword']
-            
+            fullname=request.POST['fullname']
+            ConfirmPassword=request.POST['ConfirmPassword']
           
             try:
-                user=User.objects.create_user(username=email,email=email,password=password)
+                user=User.objects.create_user(username=email,email=email,password=password,fullname=fullname,ConfirmPassword=ConfirmPassword)
                 user.is_staff=True
                 user.save()
                 messages.success(request,"account created successfully")
@@ -82,36 +82,8 @@ def seller(request):
             
      else:
             return render(request,'seller.html')
-
-
-
-def delete_g(request,pk):
-    Prodobj=Product.objects.get(pk=pk)
-    Prodobj.delete()
-    return redirect("seller")
-
-def edit_g(request,pk):
-     if request.method =="POST":
-          prodobj=Product.objects.get(pk=pk)
-          prodobj.objects.filter(pk=pk).update()
-          return redirect('seller')
-     else:            
-          data=Product.objects.get(pk=pk)
-          return render(request,'editpro.html',{'data':data})
       
-def user_login1(request):
-    if 'username' in request.session:
-        return redirect(seller)
-    if request.method=="POST":
-     email=request.POST['email']
-     password=request.POST['password']
-     user=authenticate(request,username=email,password=password)
-     if user is not None:
-          request.session['username']=email
-          login(request,user)
-          return redirect('seller')
-    else:
-          return render(request,'seller1.html')
+# for seller login
 def user_login1(request):
     if 'username' in request.session:
         return redirect('seller')  
@@ -124,26 +96,8 @@ def user_login1(request):
             login(request, user)
             return redirect('seller')  
     else:
-        return render(request, 'seller1.html')  
+        return render(request, 'seller1.html', {'error': 'Invalid credentials'})
 
-def user_login1(request):
-    
-    if 'username' in request.session:
-        return redirect('seller') 
-
-   
-    if request.method == "POST":
-        email = request.POST.get('email')  
-        password = request.POST.get('password') 
-        user = authenticate(request, username=email, password=password)
-
-        if user is not None:
-            request.session['username'] = email
-            login(request, user)
-            return redirect('seller') 
-
-        return render(request, 'seller1.html', {'error': 'Invalid login credentials.'})
-    return render(request, 'seller1.html') 
     
 
 def add_product(request):
@@ -164,4 +118,17 @@ def seller1(request):
 
 
 
+def delete_g(request,pk):
+    Prodobj=Product.objects.get(pk=pk)
+    Prodobj.delete()
+    return redirect("seller")
+
+def edit_g(request,pk):
+     if request.method =="POST":
+          prodobj=Product.objects.get(pk=pk)
+          prodobj.objects.filter(pk=pk).update()
+          return redirect('seller')
+     else:            
+          data=Product.objects.get(pk=pk)
+          return render(request,'editpro.html',{'data':data})
  

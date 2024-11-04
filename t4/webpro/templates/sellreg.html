@@ -17,11 +17,11 @@
 {% endif %}
 
 
-    <form action="{% url 'register' %}"  method="POST">
+    <form action="{% url 'seller' %}"  method="POST">
      {% csrf_token %}
     <div class="container">
         <h2>Register</h2>
-        <form action="#" method="post">
+       
             <label for="name">Full Name:</label>
             <input type="text" id="name" name="fullname" required>
 
