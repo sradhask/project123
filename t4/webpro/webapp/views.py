@@ -50,13 +50,16 @@ def register(request):
             return redirect('register')
     else:
         return render(request, 'register.html')
+    
+    
+# for userhome
 def userhome(request):
     if 'username' in request.session:
      data=Product.objects.all()
     return render(request,"userhome.html",{'data':data})
     return redirect (user_login)
 
-
+# for views
 def view_product(request,pk):
         data=Product.objects.filter(pk=pk)
         return render(request,"product.html",{'data':data})
@@ -71,7 +74,7 @@ def seller(request):
             ConfirmPassword=request.POST['ConfirmPassword']
           
             try:
-                user=User.objects.create_user(username=email,email=email,password=password,fullname=fullname,ConfirmPassword=ConfirmPassword)
+                user=User.objects.create_user(email=email,password=password,fullname=fullname,ConfirmPassword=ConfirmPassword)
                 user.is_staff=True
                 user.save()
                 messages.success(request,"account created successfully")
@@ -90,16 +93,17 @@ def user_login1(request):
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, email=email, password=password)
         if user is not None:
             request.session['username'] = email
             login(request, user)
             return redirect('seller')  
+        return redirect("user_login1")
     else:
-        return render(request, 'seller1.html', {'error': 'Invalid credentials'})
+        return render(request, 'seller2.html', {'error': 'Invalid credentials'})
 
     
-
+# for adding products in to the seller
 def add_product(request):
     if request.method=="POST":
       image=request.POST["image"]

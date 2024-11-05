@@ -13,8 +13,10 @@ urlpatterns = [
     path('view/<pk>/', views.view_product, name='view'),
     path('seller',views.seller,name="seller"),
     path('add_product',views.add_product,name="add_product"),
-    path('user_login1',views.user_login1,name="login1"),
+    path('user_login1',views.user_login1,name="user_login1"),
     path('seller1',views.seller1,name='seller1')
+    
+
 ]
 
 

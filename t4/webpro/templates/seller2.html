@@ -9,11 +9,9 @@
 
 </head>
 <body>
-    
-<a href="{% url 'view' i.pk %}" class="btn btn-primary">ADD PRODUCT</a>
+     <h4>ADD PRODUCT</h4>
 <form action="{% url 'seller' %}"method="POST">
     {% csrf_token %}
-
      <div>
     <label for="image">image</label>
     <input type="file" id="image" name="image" class="a1">
