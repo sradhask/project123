@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f16eb6;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,11 +9,11 @@ body {
 }
 
 .container {
-    background-color: white;
-    padding: 20px;
+    background-color: hsl(228, 100%, 99%);
+    padding: 35px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    box-shadow: 0 0 10px rgba(238, 235, 235, 0.904);
+    width: 350px;
     text-align: center;
 }
 
@@ -22,7 +22,7 @@ h2 {
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-align: left;
 }
 

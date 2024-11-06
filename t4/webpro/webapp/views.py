@@ -95,7 +95,7 @@ def user_login1(request):
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user is not None:
-            request.session['username'] = email
+            request.session['username']=email
             login(request, user)
             return redirect('seller')  
         return redirect("user_login1")
@@ -119,7 +119,6 @@ def add_product(request):
 def seller1(request):
     return render(request,"seller1.html")
  
-
 
 
 def delete_g(request,pk):

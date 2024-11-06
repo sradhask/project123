@@ -10,37 +10,36 @@
 
 
 </head>
-<body style="background-image:linear-gradient(to right, rgba(255,0,0,0), #E695BE);
+<body style="background-image:linear-gradient(to right, rgba(255,0,0,0), #f16eb6);
 ;">
-     <h4 style="margin-left:30%">ADD PRODUCT</h4>
+     <h4 style="margin-left:43%">ADD PRODUCT</h4>
 <form action="{% url 'seller' %}"method="POST" >
     {% csrf_token %}
-     <div style="margin-left:20%">
-    <label for="image">IMAGE</label >
+     <div style="margin-left:39%">
+    <label for="image"style="margin-top:5%">IMAGE</label >
     <input type="file" id="image" name="IMAGE" class="a1">
      </div>
-    <div>
-    <input type="name" name="name" id="name" placeholder="Name" class="a2">
+     <div style="margin-top:2%">
+    <input type="name" name="name" id="name" placeholder="Name" class="a2"style="margin-left:42%">
+    </div>
+    <input type="number" name="prize" id="prize" placeholder="Price" class="a3"style="margin-left:42%">
     </div>
     <div>
-    <input type="number" name="prize" id="prize" placeholder="Price" class="a3">
+    <input type="number" name="offer_prize" id="offer_prize" placeholder="offer Price" class="a4"style="margin-left:42%">
     </div>
     <div>
-    <input type="number" name="offer_prize" id="offer_prize" placeholder="offer Price" class="a4">
+        <input type="number" name="stock" id="stock" placeholder="stock" class="a5"style="margin-left:42%">
     </div>
     <div>
-        <input type="number" name="stock" id="stock" placeholder="stock" class="a5">
+        <input type="text" name="discription" id="discription" placeholder="description" class="a6"style="margin-left:42%">
     </div>
     <div>
-        <input type="text" name="discription" id="discription" placeholder="description" class="a6">
+       <input type="number" name="size" id="size" placeholder="size" class="a7"style="margin-left:42%">
     </div>
-    <div>
-       <input type="number" name="size" id="size" placeholder="size" class="a7">
+    <div style="margin-bottom:2%">
+   <button type="submit"style="margin-left:46%">submit</button>
     </div>
-      
-   <button type="submit">submit</button>
     </form>
-       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
