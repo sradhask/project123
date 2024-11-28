@@ -84,7 +84,7 @@ def seller(request):
                 return redirect('login')
             
      else:
-            return render(request,'seller.html')
+            return render(request,'sellerlog.html')
       
 # for seller login
 def user_login1(request):
@@ -100,7 +100,7 @@ def user_login1(request):
             return redirect('seller')  
         return redirect("user_login1")
     else:
-        return render(request, 'seller2.html', {'error': 'Invalid credentials'})
+        return render(request, 'addpro.html', {'error': 'Invalid credentials'})
 
     
 # for adding products in to the seller
@@ -112,20 +112,34 @@ def add_product(request):
       offer_prize=request.POST["offer_price"]
       discription=request.POST["discription"]
       size=request.POST["size"]
-      return render("seller2.html")
+      return render("addpro.html")
     else:
-        return redirect("seller1.html")
+        return redirect("sellerhome.html")
       
+      
+      
+#   for add product     
 def seller1(request):
-    return render(request,"seller1.html")
+    return render(request,"sellerhome.html")
  
+# for display products
+
+def master(request);
+return 
 
 
+
+
+
+
+# for delete
 def delete_g(request,pk):
     Prodobj=Product.objects.get(pk=pk)
     Prodobj.delete()
     return redirect("seller")
 
+
+# for edit
 def edit_g(request,pk):
      if request.method =="POST":
           prodobj=Product.objects.get(pk=pk)
