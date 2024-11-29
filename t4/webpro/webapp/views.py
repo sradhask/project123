@@ -104,17 +104,33 @@ def user_login1(request):
 
     
 # for adding products in to the seller
+
 def add_product(request):
-    if request.method=="POST":
-      image=request.POST["image"]
-      name=request.POST["name"]
-      Prize=request.POST["prize"]
-      offer_prize=request.POST["offer_price"]
-      discription=request.POST["discription"]
-      size=request.POST["size"]
-      return render("addpro.html")
+    if request.method == "POST":
+        # Capture data from the form
+        image = request.FILES.get("image")  # Use request.FILES for image uploads
+        name = request.POST["name"]
+        prize = request.POST["prize"]
+        offer_price = request.POST["offer_price"]
+        description = request.POST["description"]
+        size = request.POST["size"]
+
+        # Create a new product object and save it to the database
+        product = Product(name=name,prize=prize,offer_price=offer_price, size=size,description=description, image=image)
+        
+        product.save()  # Save the product to the database
+        messages.success(request,"product added")    
+
+        # Redirect to the seller page or another page
+        return redirect("sellerhome")  # Replace with your actual URL name
     else:
-        return redirect("sellerhome.html")
+        return render(request, "addpro.html")
+    
+    
+    
+    
+    
+
       
       
       
@@ -123,9 +139,6 @@ def seller1(request):
     return render(request,"sellerhome.html")
  
 # for display products
-
-def master(request);
-return 
 
 
 
