@@ -11,14 +11,14 @@ def user_login(request):
     if 'username' in request.session:
         return redirect(userhome)
     if request.method=="POST":
-     email=request.POST['email']
+     username=request.POST['username']
      password=request.POST['password']
-     user=authenticate(request,username=email,password=password)
+     user=authenticate(request,username=username,password=password)
      if user is not None:
-          request.session['username']=email
+          request.session['username']=username
           login(request,user)
           return redirect('userhome')
-     return render(request,'userhome.html')
+     return redirect(request,'user_login')
     else:
      return render(request,'login.html')
     
@@ -31,23 +31,27 @@ def logout_view(request):
 # for user registration
 def register(request):
     if request.method == 'POST':
-        fullname = request.POST['fullname']
+        username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['ConfirmPassword']
 
-        if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return redirect('register')
+        if not username or not email or not password or not confirm_password:
+            messages.error(request,'all fields are required.')
 
-        try:
-            user = User.objects.create_user(username=fullname, email=email, password=password)
+        elif confirm_password != password:
+            messages.error(request,"password doesnot match")
+           
+        elif User.objects.filter(email=email).exists():
+            messages.error(request,"email already exist")
+           
+        elif User.objects.filter(username=username).exists():
+            messages.error(request,"username already exist")
+        else:
+            user = User.objects.create_user(username=username, email=email, password=password)    
             user.save()
-            messages.success(request, "Registration successful. You can now log in.")
-            return redirect("user_login")
-        except:
-            messages.error(request, "Email already exists.")
-            return redirect('register')
+            messages.success(request,"account created successfully")
+            return redirect(request, "user_login")
     else:
         return render(request, 'register.html')
     
@@ -70,18 +74,25 @@ def seller(request):
      if request.method =='POST':
             email=request.POST['email']
             password=request.POST['password']
-            fullname=request.POST['fullname']
+            username=request.POST['username']
             ConfirmPassword=request.POST['ConfirmPassword']
           
-            try:
-                user=User.objects.create_user(email=email,password=password,fullname=fullname,ConfirmPassword=ConfirmPassword)
-                user.is_staff=True
+            if not username or not email or not password or not ConfirmPassword:
+                messages.error(request,'all fields are required.')
+
+            elif ConfirmPassword != password:
+                messages.error(request,"password doesnot match")
+           
+            elif User.objects.filter(email=email).exists():
+                messages.error(request,"email already exist")
+           
+            elif User.objects.filter(username=username).exists():
+                messages.error(request,"username already exist")
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)    
                 user.save()
                 messages.success(request,"account created successfully")
-            except:
-                messages.error(request, "Email exit.")
-
-                return redirect('login')
+                return redirect(request, "user_login1")
             
      else:
             return render(request,'sellerlog.html')
@@ -91,16 +102,16 @@ def user_login1(request):
     if 'username' in request.session:
         return redirect('seller')  
     if request.method == "POST":
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
-            request.session['username']=email
+            request.session['username']=username
             login(request, user)
-            return redirect('seller')  
+            return redirect('seller1')  
         return redirect("user_login1")
     else:
-        return render(request, 'addpro.html', {'error': 'Invalid credentials'})
+        return render(request, 'sellerlog.html', {'error': 'Invalid credentials'})
 
     
 # for adding products in to the seller
