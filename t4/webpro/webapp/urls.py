@@ -11,9 +11,9 @@ urlpatterns = [
     path('user',views.userhome,name="userhome"),
     path('logout_p',views.logout_view,name="logout_p"),
     path('view/<pk>/', views.view_product, name='view'),
-    path('seller',views.seller,name="seller"),
-    path('add_product',views.add_product,name="add_product"),
     path('user_login1',views.user_login1,name="user_login1"),
+    path('add_product',views.add_product,name="add_product"),
+    path('seller',views.seller,name="seller"),
     path('seller1',views.seller1,name='seller1')
     
 

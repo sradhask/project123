@@ -89,18 +89,19 @@ def seller(request):
             elif User.objects.filter(username=username).exists():
                 messages.error(request,"username already exist")
             else:
-                user = User.objects.create_user(username=username, email=email, password=password)    
+                user = User.objects.create_user(username=username, email=email, password=password)  
+                user.is_staff=True  
                 user.save()
                 messages.success(request,"account created successfully")
                 return redirect(request, "user_login1")
             
      else:
-            return render(request,'sellerlog.html')
+            return render(request,'sellreg.html')
       
 # for seller login
 def user_login1(request):
     if 'username' in request.session:
-        return redirect('seller')  
+        return redirect('seller1')  
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
