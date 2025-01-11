@@ -8,19 +8,27 @@ from . models  import*
 
 # for userlogin
 def user_login(request):
+    # Redirect if user is already logged in
     if 'username' in request.session:
-        return redirect(userhome)
-    if request.method=="POST":
-     username=request.POST['username']
-     password=request.POST['password']
-     user=authenticate(request,username=username,password=password)
-     if user is not None:
-          request.session['username']=username
-          login(request,user)
-          return redirect('userhome')
-     return redirect(request,'user_login')
-    else:
-     return render(request,'login.html')
+        return redirect('userhome')
+    
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            request.session['username'] = username
+            return redirect('userhome')
+        else:
+            # Add an error message for failed login
+            messages.error(request, 'Invalid username or password')
+            return render(request, 'login.html')
+    
+    # GET request - show login form
+    return render(request, 'login.html')
     
 # for user logout
 def logout_view(request):
@@ -31,29 +39,35 @@ def logout_view(request):
 # for user registration
 def register(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['ConfirmPassword']
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('ConfirmPassword')
 
+        # Validate form inputs
         if not username or not email or not password or not confirm_password:
-            messages.error(request,'all fields are required.')
+            messages.error(request, 'All fields are required.')
 
-        elif confirm_password != password:
-            messages.error(request,"password doesnot match")
-           
+        elif password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+
         elif User.objects.filter(email=email).exists():
-            messages.error(request,"email already exist")
-           
+            messages.error(request, "Email already exists.")
+
         elif User.objects.filter(username=username).exists():
-            messages.error(request,"username already exist")
+            messages.error(request, "Username already exists.")
+
         else:
-            user = User.objects.create_user(username=username, email=email, password=password)    
+            # Create and save the user
+            user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
-            messages.success(request,"account created successfully")
-            return redirect(request, "user_login")
-    else:
-        return render(request, 'register.html')
+            messages.success(request, "Account created successfully.")
+            return redirect('user_login')  # Use the URL pattern name, not the request object.
+
+        # If errors, render the form again with messages
+        return render(request, 'register.html', {'username': username, 'email': email})
+
+    return render(request, 'register.html')
     
     
 # for userhome
